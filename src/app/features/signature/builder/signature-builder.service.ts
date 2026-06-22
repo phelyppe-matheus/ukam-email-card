@@ -4,7 +4,7 @@ import { SignatureData } from '../models/signature.model';
 const NAVY = '#0B3B5E';
 const TEAL = '#0E7A57';
 const CARD_BG =
-  'https://github.com/phelyppe-matheus/ukam-email-card/blob/master/src/browser/signatures/card_bg.png?raw=true';
+  'https://github.com/phelyppe-matheus/ukam-email-card/blob/master/src/browser/signatures/card-bg.png?raw=true';
 const BASE_FONT = `
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
