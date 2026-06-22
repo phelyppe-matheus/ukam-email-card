@@ -1,59 +1,55 @@
-# UkamEmailCard
+# Ukamsoft Signature Editor — drop-in component
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.2.
+Angular 17+ · Standalone · Angular Material · Tailwind CSS
 
-## Development server
+## Files
 
-To start a local development server, run:
+| File | Purpose |
+|------|---------|
+| `signature.model.ts` | `SignatureData` interface + default values |
+| `signature-builder.service.ts` | HTML generation, clipboard copy, download |
+| `signature-editor.component.ts` | Main component (signals, computed) |
+| `signature-editor.component.html` | Template (Material + Tailwind) |
+| `signature-editor.component.css` | Scoped overrides for mat-form-field spacing |
 
-```bash
-ng serve
-```
+## Drop-in steps
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. Copy all five files into a folder inside your project, e.g.:
+   ```
+   src/app/features/signature-editor/
+   ```
 
-## Code scaffolding
+2. Import the component wherever you want to use it:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+   ```typescript
+   // In a standalone component or a route
+   import { SignatureEditorComponent } from './features/signature-editor/signature-editor.component';
 
-```bash
-ng generate component component-name
-```
+   @Component({
+     imports: [SignatureEditorComponent],
+     template: `<app-signature-editor />`
+   })
+   export class SomePage {}
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+   Or add it as a route:
+   ```typescript
+   // app.routes.ts
+   {
+     path: 'assinatura',
+     loadComponent: () =>
+       import('./features/signature-editor/signature-editor.component')
+         .then(m => m.SignatureEditorComponent),
+   }
+   ```
 
-```bash
-ng generate --help
-```
+3. No extra dependencies needed beyond what your project already uses:
+   - `@angular/material` (card, form-field, input, button, icon, divider, snack-bar, tooltip)
+   - `@angular/forms` (FormsModule)
+   - Tailwind CSS (already configured)
 
-## Building
+## Customisation
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Brand colours**: edit `NAVY` and `TEAL` constants at the top of `signature-builder.service.ts`.
+- **Tagline**: edit the `Infraestrutura de crédito` string in the same service.
+- **Extra fields** (LinkedIn, address, etc.): add to `SignatureData`, the form template, and `buildHtml()` in the service.

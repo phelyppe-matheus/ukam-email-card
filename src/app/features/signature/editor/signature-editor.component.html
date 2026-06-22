@@ -1,0 +1,121 @@
+<div class="flex flex-col gap-6 p-4 p-lg-6">
+
+  <!-- Header -->
+  <div class="flex flex-col gap-1">
+    <h1 class="text-2xl font-semibold tracking-tight text-primary dark:text-primary-980">
+      Gerador de Assinatura
+    </h1>
+    <p class="text-sm text-secondary">
+      Preencha seus dados e copie a assinatura para o Gmail.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Form panel -->
+    <mat-card class="flex flex-col gap-0">
+      <div class="p-4 flex flex-col gap-3">
+        <p class="text-xs font-medium uppercase tracking-wider text-secondary">
+          Suas informações
+        </p>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nome completo</mat-label>
+          <input matInput [ngModel]="data().name"
+                 (ngModelChange)="update('name', $event)"
+                 placeholder="John Doe Silva">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Cargo</mat-label>
+          <input matInput [ngModel]="data().position"
+                 (ngModelChange)="update('position', $event)"
+                 placeholder="Desenvolvedor de Software">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Área / Departamento (opcional)</mat-label>
+          <input matInput [ngModel]="data().department"
+                 (ngModelChange)="update('department', $event)"
+                 placeholder="Engenharia de Software">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Telefone</mat-label>
+          <mat-icon matPrefix class="mr-2 text-secondary">phone</mat-icon>
+          <input matInput [ngModel]="data().phone"
+                 (ngModelChange)="update('phone', $event)"
+                 placeholder="+55 (11) 99999-9999">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>E-mail</mat-label>
+          <mat-icon matPrefix class="mr-2 text-secondary">mail</mat-icon>
+          <input matInput type="email" [ngModel]="data().email"
+                 (ngModelChange)="update('email', $event)"
+                 placeholder="voce@ukamsoft.com.br">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Site</mat-label>
+          <mat-icon matPrefix class="mr-2 text-secondary">language</mat-icon>
+          <input matInput [ngModel]="data().site"
+                 (ngModelChange)="update('site', $event)"
+                 placeholder="www.ukamsoft.com.br">
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>URL da foto (opcional)</mat-label>
+          <mat-icon matPrefix class="mr-2 text-secondary">person</mat-icon>
+          <input matInput [ngModel]="data().photoUrl"
+                 (ngModelChange)="update('photoUrl', $event)"
+                 placeholder="https://...">
+          <mat-hint>URL pública da sua foto. Sem URL, mostra as iniciais.</mat-hint>
+        </mat-form-field>
+      </div>
+    </mat-card>
+
+    <!-- Preview + actions panel -->
+    <div class="flex flex-col gap-4">
+
+      <mat-card>
+        <div class="p-4 flex flex-col gap-3">
+          <p class="text-xs font-medium uppercase tracking-wider text-secondary">
+            Pré-visualização
+          </p>
+          <!-- White bg simulates an email client -->
+          <div class="rounded-lg border border-divider bg-white p-5 min-h-32"
+               [innerHTML]="safePreview()">
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card>
+        <div class="p-4 flex flex-col gap-3">
+          <p class="text-xs font-medium uppercase tracking-wider text-secondary">
+            Exportar
+          </p>
+
+          <button mat-flat-button color="primary" class="w-full" (click)="copyForGmail()">
+            <mat-icon>content_copy</mat-icon>
+            Copiar para o Gmail
+          </button>
+
+          <button mat-stroked-button class="w-full" (click)="download()">
+            <mat-icon>download</mat-icon>
+            Baixar HTML
+          </button>
+
+          <p class="text-xs text-secondary leading-relaxed">
+            No Gmail: <strong>Configurações → Ver todas → Assinatura</strong> →
+            crie ou edite uma assinatura → cole com
+            <kbd class="px-1 py-0.5 rounded border border-divider bg-hover font-mono text-xs">Ctrl+Shift+V</kbd>.
+          </p>
+        </div>
+      </mat-card>
+
+    </div>
+  </div>
+</div>
