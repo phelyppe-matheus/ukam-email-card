@@ -3,6 +3,12 @@ import { SignatureData } from '../models/signature.model';
 
 const NAVY = '#0B3B5E';
 const TEAL = '#0E7A57';
+const CARD_BG =
+  'https://github.com/phelyppe-matheus/ukam-email-card/blob/master/src/browser/signatures/card_bg.png?raw=true';
+const BASE_FONT = `
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+`;
 
 @Injectable({ providedIn: 'root' })
 export class SignatureBuilderService {
@@ -57,7 +63,7 @@ export class SignatureBuilderService {
 
     return `
 <table cellpadding="0" cellspacing="0" border="0"
-       style="font-family:Arial,Helvetica,sans-serif;">
+       style="${BASE_FONT}">
   <tr>
     <td style="vertical-align:top;padding-right:16px;">
       ${avatar}
@@ -87,202 +93,155 @@ export class SignatureBuilderService {
 
   buildFancyHtml(d: SignatureData): string {
     const avatar = d.photoUrl
-      ? `<img
-          src="${d.photoUrl}"
-          alt="${d.name}"
+      ? `<img src="${d.photoUrl}"
           width="64"
           height="64"
           style="
             width:64px;
             height:64px;
             border-radius:50%;
-            object-fit:cover;
-            border:3px solid white;
             display:block;
-          "
-        >`
+            object-fit:cover;
+            border:3px solid #ffffff;
+          " />`
       : `<div style="
           width:64px;
           height:64px;
           border-radius:50%;
           background:${NAVY};
-          color:white;
-          font-size:22px;
+          color:#ffffff;
+          font-size:20px;
           font-weight:700;
           line-height:64px;
           text-align:center;
-          border:3px solid white;
+          font-family:Arial,Helvetica,sans-serif;
+          border:3px solid #ffffff;
         ">
           ${this.getInitials(d.name) || '?'}
         </div>`;
 
     const dept = d.department
-      ? `<div style="
-          font-size:12px;
-          color:#BBBBBB;
-          margin-bottom:12px;
-        ">
+      ? `<div style="font-size:11px;color:#D1D5DB;margin-top:2px;">
           ${d.department}
         </div>`
       : '';
 
     const phone = d.phone
-      ? `<div style="
-          font-size:12px;
-          color:white;
-          line-height:18px;
-        ">
+      ? `<div style="font-size:11px;color:#ffffff;margin-top:4px;">
           📞 ${d.phone}
         </div>`
       : '';
 
     const email = d.email
-      ? `<div style="
-          font-size:12px;
-          line-height:18px;
-        ">
-          <a
-            href="mailto:${d.email}"
-            style="
-              color:white;
-              text-decoration:none;
-            "
-          >
+      ? `<div style="font-size:11px;margin-top:4px;">
+          <a href="mailto:${d.email}"
+            style="color:#6DFE8C;text-decoration:none;">
             ✉ ${d.email}
           </a>
         </div>`
       : '';
 
     const site = d.site
-      ? `<div style="
-          font-size:12px;
-          line-height:18px;
-        ">
-          <a
-            href="https://${d.site.replace(/^https?:\/\//, '')}"
-            style="
-              color:white;
-              text-decoration:none;
-            "
-          >
+      ? `<div style="font-size:11px;margin-top:4px;">
+          <a href="https://${d.site.replace(/^https?:\/\//, '')}"
+            style="color:#6DFE8C;text-decoration:none;">
             🌐 ${d.site}
           </a>
         </div>`
       : '';
 
     return `
-  <div
+  <table cellpadding="0" cellspacing="0" border="0"
+    width="520"
     style="
-      position:relative;
-      width:382px;
-      height:160px;
-      overflow:hidden;
-      background:aquamarine;
       font-family:Arial,Helvetica,sans-serif;
-    "
-  >
+      background:#000000;
+    ">
 
-    <img
-      src="/black_slide.png"
-      style="
-        position:absolute;
-        height:160px;
-        right:0;
-        transform:translateX(-38%);
-      "
-    >
+    <tr>
+      <td
+        background="${CARD_BG}"
+        width="520"
+        height="160"
+        valign="top"
+        style="
+          background-repeat:no-repeat;
+          background-size:cover;
+        "
+      >
 
-    <img
-      src="/white_slide.png"
-      style="
-        position:absolute;
-        height:160px;
-        left:0;
-        transform:translateX(62%);
-      "
-    >
+        <table cellpadding="0" cellspacing="0" border="0"
+          width="100%"
+          height="160"
+          style="color:#ffffff;">
 
-    <table
-      cellpadding="0"
-      cellspacing="0"
-      border="0"
-      style="
-        position:absolute;
-        inset:0;
-        width:100%;
-        height:100%;
-        z-index:10;
-        padding:16px 20px;
-      "
-    >
-      <tr>
-        <td
-          style="
-            width:65%;
-            vertical-align:middle;
-          "
-        >
-          <div style="
-            font-size:19px;
-            font-weight:700;
-            color:#EEEEEE;
-            margin-bottom:2px;
-          ">
-            ${d.name || 'Seu Nome'}
-          </div>
+          <tr>
 
-          <div style="
-            font-size:13px;
-            color:#BBBBBB;
-            margin-bottom:4px;
-          ">
-            ${d.position || ''}
-          </div>
+            <!-- LEFT SIDE -->
+            <td
+              valign="top"
+              style="
+                padding:18px 16px 16px 20px;
+              "
+            >
+              <div style="
+                font-size:16px;
+                font-weight:700;
+                color:#EEEEEE;
+              ">
+                ${d.name || 'Seu Nome'}
+              </div>
 
-          ${dept}
+              <div style="
+                font-size:12px;
+                color:#BBBBBB;
+                margin-top:2px;
+              ">
+                ${d.position || ''}
+              </div>
 
-          ${phone}
-          ${email}
-          ${site}
-        </td>
+              ${dept}
 
-        <td
-          style="
-            width:35%;
-            text-align:center;
-            vertical-align:middle;
-          "
-        >
-          ${avatar}
+              <div style="margin-top:10px;">
+                ${phone}
+                ${email}
+                ${site}
+              </div>
+            </td>
 
-          <div style="margin-top:10px;">
-            <span style="
-              color:#0E7A57;
-              font-weight:700;
-              font-size:14px;
-            ">
-              UKAM
-            </span>
+            <!-- RIGHT SIDE -->
+            <td
+              width="120"
+              valign="top"
+              align="center"
+              style="padding:16px 16px 16px 0;"
+            >
+              ${avatar}
 
-            <span style="
-              color:#0B3B5E;
-              font-size:14px;
-            ">
-              SOFT
-            </span>
-          </div>
+              <div style="margin-top:10px;">
+                <div style="font-size:12px;">
+                  <span style="color:#0E7A57;font-weight:700;">UKAM</span>
+                  <span style="color:#0B3B5E;">SOFT</span>
+                </div>
 
-          <div style="
-            font-size:10px;
-            color:#666666;
-            margin-top:2px;
-          ">
-            Infraestrutura de crédito
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
+                <div style="
+                  font-size:10px;
+                  color:#CCCCCC;
+                  margin-top:2px;
+                ">
+                  Infraestrutura de crédito
+                </div>
+              </div>
+            </td>
+
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+
+  </table>
   `.trim();
   }
 
