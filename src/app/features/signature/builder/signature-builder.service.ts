@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SignatureData } from '../models/signature.model';
 
+
 const NAVY = '#0B3B5E';
 const TEAL = '#0E7A57';
 const CARD_BG =
@@ -151,98 +152,157 @@ export class SignatureBuilderService {
       : '';
 
     return `
-  <table cellpadding="0" cellspacing="0" border="0"
-    width="520"
-    style="
-      font-family:Arial,Helvetica,sans-serif;
-      background:#000000;
-    ">
-
-    <tr>
-      <td
-        background="${CARD_BG}"
+      <table
+        role="presentation"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
         width="520"
-        height="160"
-        valign="top"
         style="
-          background-repeat:no-repeat;
-          background-size:cover;
+          width:520px;
+          border-collapse:collapse;
+          font-family:Arial,Helvetica,sans-serif;
+
         "
       >
 
-        <table cellpadding="0" cellspacing="0" border="0"
-          width="100%"
-          height="160"
-          style="color:#ffffff;">
+      <tr>
+      <td width="520" height="160" valign="top">
 
-          <tr>
+      <!--[if gte mso 9]>
+      <v:rect
+        xmlns:v="urn:schemas-microsoft-com:vml"
+        fill="true"
+        stroke="false"
+        style="width:390pt;height:120pt;">
+        <v:fill
+          src="${CARD_BG}"
+          type="frame"/>
+        <v:textbox inset="0,0,0,0">
+      <![endif]-->
 
-            <!-- LEFT SIDE -->
-            <td
-              valign="top"
-              style="
-                padding:18px 16px 16px 20px;
-              "
-            >
-              <div style="
-                font-size:16px;
-                font-weight:700;
-                color:#EEEEEE;
-              ">
-                ${d.name || 'Seu Nome'}
-              </div>
+      <div style="
+        background-image:url('${CARD_BG}');
+        background-repeat:no-repeat;
+        background-position:right center;
+        background-size:cover;
+        width:520px;
+        height:160px;
+      ">
 
-              <div style="
-                font-size:12px;
-                color:#BBBBBB;
-                margin-top:2px;
-              ">
-                ${d.position || ''}
-              </div>
+      <table
+        role="presentation"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        width="520"
+        height="160"
+      >
 
-              ${dept}
+      <tr>
 
-              <div style="margin-top:10px;">
-                ${phone}
-                ${email}
-                ${site}
-              </div>
-            </td>
+      <td
+        valign="top"
+        width="350"
+        style="
+          padding:18px 20px 16px 20px;
+          color:#ffffff;
+        "
+      >
 
-            <!-- RIGHT SIDE -->
-            <td
-              width="120"
-              valign="top"
-              align="center"
-              style="padding:16px 16px 16px 0;"
-            >
-              ${avatar}
+      <div style="
+        font-size:18px;
+        line-height:22px;
+        font-weight:bold;
+        color:#ffffff;
+      ">
+        ${d.name || 'Seu Nome'}
+      </div>
 
-              <div style="margin-top:10px;">
-                <div style="font-size:12px;">
-                  <span style="color:#0E7A57;font-weight:700;">UKAM</span>
-                  <span style="color:#0B3B5E;">SOFT</span>
-                </div>
+      <div style="
+        font-size:12px;
+        line-height:16px;
+        color:#CFCFCF;
+        padding-top:2px;
+      ">
+        ${d.position || ''}
+      </div>
 
-                <div style="
-                  font-size:10px;
-                  color:#CCCCCC;
-                  margin-top:2px;
-                ">
-                  Infraestrutura de crédito
-                </div>
-              </div>
-            </td>
+      ${dept}
 
-          </tr>
+      <table
+        role="presentation"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        style="margin-top:10px;"
+      >
+      <tr>
+      <td>
 
-        </table>
+      ${phone}
+      ${email}
+      ${site}
 
       </td>
-    </tr>
+      </tr>
+      </table>
 
-  </table>
-  `.trim();
+      </td>
+
+      <td
+        width="120"
+        align="center"
+        valign="top"
+        style="
+          padding-top:16px;
+          padding-right:24px;
+        "
+      >
+
+      ${avatar}
+
+      <table
+        role="presentation"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        style="margin-top:10px;"
+      >
+      <tr>
+      <td align="center">
+
+      <div style="
+        font-size:10px;
+        line-height:12px;
+        color:#CCCCCC;
+        padding-top:2px;
+      ">
+        Infraestrutura de crédito
+      </div>
+
+      </td>
+      </tr>
+      </table>
+
+      </td>
+
+      </tr>
+
+      </table>
+
+      </div>
+
+      <!--[if gte mso 9]>
+        </v:textbox>
+      </v:rect>
+      <![endif]-->
+
+      </td>
+      </tr>
+
+      </table>
+      `.trim();
   }
 
   async copyAsRichHtml(html: string): Promise<void> {
