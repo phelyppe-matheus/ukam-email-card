@@ -10,10 +10,10 @@
     </p>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-[auto_auto] gap-6">
 
     <!-- Form panel -->
-    <mat-card class="flex flex-col gap-0">
+    <mat-card class="flex flex-col gap-0 max-w-80">
       <div class="p-4 flex flex-col gap-3">
         <p class="text-xs font-medium uppercase tracking-wider text-secondary">
           Suas informações
@@ -26,12 +26,55 @@
                  placeholder="John Doe Silva">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Cargo</mat-label>
-          <input matInput [ngModel]="data().position"
-                 (ngModelChange)="update('position', $event)"
-                 placeholder="Desenvolvedor de Software">
-        </mat-form-field>
+        <mat-accordion appearance="outline" class="w-full">
+          <mat-expansion-panel [(expanded)]="cargo_expanded">
+            
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Cargo
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+            <div class="flex flex-col gap-3 pt-2">
+
+              <mat-selection-list
+                [multiple]="true"
+                (selectionChange)="onPositionsChange()"
+                #positionList
+              >
+                @for (position of defaultPositions; track position) {
+                  <mat-list-option
+                    [value]="position"
+                    [selected]="selectedPositions.includes(position)"
+                  >
+                    {{ position }}
+                  </mat-list-option>
+                }
+
+                <mat-list-option
+                  value="__custom__"
+                  [selected]="hasCustomPosition"
+                >
+                  Outro
+                </mat-list-option>
+              </mat-selection-list>
+
+              @if (hasCustomPosition) {
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Informe o cargo</mat-label>
+                  <input
+                    matInput
+                    [ngModel]="customPosition"
+                    (ngModelChange)="onCustomPositionChange($event)"
+                    placeholder="Ex: Arquiteto de Software"
+                  >
+                </mat-form-field>
+              }
+
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Área / Departamento (opcional)</mat-label>
@@ -86,7 +129,7 @@
             Pré-visualização
           </p>
           <!-- White bg simulates an email client -->
-          <div class="rounded-lg border border-divider bg-white p-5 min-h-32"
+          <div class="flex place-content-center rounded-lg border border-divider bg-white p-5 min-h-32"
                [innerHTML]="safePreview()">
           </div>
         </div>
@@ -108,7 +151,7 @@
             Baixar HTML
           </button>
 
-          <p class="text-xs text-secondary leading-relaxed">
+          <p class="text-xs text-secondary leading-relaxed w-fit">
             No Gmail: <strong>Configurações → Ver todas → Assinatura</strong> →
             crie ou edite uma assinatura → cole com
             <kbd class="px-1 py-0.5 rounded border border-divider bg-hover font-mono text-xs">Ctrl+Shift+V</kbd>.
