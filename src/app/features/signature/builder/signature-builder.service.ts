@@ -26,9 +26,9 @@ export class SignatureBuilderService {
   
   buildStandardHtml(d: SignatureData): string {
     const avatar = d.photoUrl
-      ? `<img src="${d.photoUrl}" alt="${d.name}" width="64" height="64"
+      ? `<img src="${d.photoUrl}" alt="${d.name}" width="80" height="80"
            style="border-radius:50%;object-fit:cover;display:block;">`
-      : `<div style="width:64px;height:64px;border-radius:50%;background:${NAVY};
+      : `<div style="width:80px;height:80px;border-radius:50%;background:${NAVY};
            display:flex;align-items:center;justify-content:center;
            font-size:22px;font-weight:700;color:#fff;
            font-family:Arial,sans-serif;letter-spacing:1px;">
@@ -62,34 +62,88 @@ export class SignatureBuilderService {
          </td></tr>`
       : '';
 
-    return `
-<table cellpadding="0" cellspacing="0" border="0"
-       style="${BASE_FONT}">
-  <tr>
-    <td style="vertical-align:top;padding-right:16px;">
-      ${avatar}
-    </td>
-    <td style="vertical-align:top;border-left:3px solid ${TEAL};padding-left:14px;">
-      <div style="font-size:15px;font-weight:700;color:${NAVY};letter-spacing:-0.2px;">
-        ${d.name || 'Seu Nome'}
-      </div>
-      <div style="font-size:12px;color:#374151;margin-top:2px;">
-        ${d.position || ''}
-      </div>
-      ${dept}
-      <table cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;">
-        ${phone}${email}${site}
+      return `
+      <table cellpadding="0" cellspacing="0" border="0"
+            style="
+              ${BASE_FONT}
+              width:640px;
+              height:160px;
+            ">
+        <tr>
+          <td style="padding-left:170px;padding-top:52px;">
+
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tr>
+
+                <!-- LEFT BLOCK -->
+                <td style="vertical-align:top;padding-right:40px;">
+                  <div style="
+                    font-size:18px;
+                    font-weight:700;
+                    color:#FFFFFF;
+                    line-height:20px;
+                  ">
+                    ${d.name || 'Seu Nome'}
+                  </div>
+
+                  <div style="
+                    font-size:12px;
+                    color:#E5E7EB;
+                    margin-top:4px;
+                  ">
+                    ${d.position || ''}
+                  </div>
+
+                  ${
+                    d.department
+                      ? `
+                        <div style="
+                          font-size:11px;
+                          color:${TEAL};
+                          margin-top:4px;
+                          font-weight:600;
+                        ">
+                          ${d.department}
+                        </div>
+                      `
+                      : ''
+                  }
+                </td>
+
+                <!-- RIGHT BLOCK -->
+                <td style="vertical-align:top;">
+                  <div style="
+                    font-size:11px;
+                    color:#FFFFFF;
+                    line-height:18px;
+                  ">
+                    ${d.phone || ''}
+                  </div>
+
+                  <div style="
+                    font-size:11px;
+                    color:#FFFFFF;
+                    line-height:18px;
+                  ">
+                    ${d.email || ''}
+                  </div>
+
+                  <div style="
+                    font-size:11px;
+                    color:${TEAL};
+                    line-height:18px;
+                  ">
+                    ${d.site || ''}
+                  </div>
+                </td>
+
+              </tr>
+            </table>
+
+          </td>
+        </tr>
       </table>
-      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #E5E7EB;">
-        <span style="font-size:13px;font-weight:700;color:${NAVY};letter-spacing:0.5px;">UKAM</span>
-        <span style="font-size:13px;font-weight:400;color:${TEAL};letter-spacing:0.5px;">SOFT</span>
-        <span style="font-size:10px;color:#9CA3AF;margin-left:6px;font-style:italic;">
-          Infraestrutura de crédito
-        </span>
-      </div>
-    </td>
-  </tr>
-</table>`.trim();
+      `.trim();
   }
 
   buildFancyHtml(d: SignatureData): string {
@@ -140,16 +194,12 @@ export class SignatureBuilderService {
             ✉ ${d.email}
           </a>
         </div>`
-      : '';
-
-    const site = d.site
-      ? `<div style="font-size:11px;margin-top:4px;">
+      : `<div style="font-size:11px;margin-top:4px;">
           <a href="https://${d.site.replace(/^https?:\/\//, '')}"
             style="color:#6DFE8C;text-decoration:none;">
             🌐 ${d.site}
           </a>
-        </div>`
-      : '';
+        </div>`;
 
     return `
       <table
@@ -242,7 +292,6 @@ export class SignatureBuilderService {
 
       ${phone}
       ${email}
-      ${site}
 
       </td>
       </tr>
@@ -275,7 +324,7 @@ export class SignatureBuilderService {
       <div style="
         font-size:10px;
         line-height:12px;
-        color:#CCCCCC;
+        color:#888888;
         padding-top:2px;
       ">
         Infraestrutura de crédito
